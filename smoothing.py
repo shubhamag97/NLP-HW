@@ -27,4 +27,4 @@ def smoothing(file_path, add_k = ADD_K):
 	K_bigram = get_k_bigram(add_k, Unigram_count, Bigram_count)
 	return Unigram_count, Bigram_Dict, K_unigram, K_bigram
 
-smoothing("train/obama.txt")
+#smoothing("train/obama.txt")

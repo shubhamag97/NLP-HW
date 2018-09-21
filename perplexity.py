@@ -43,7 +43,7 @@ def perplexity(train_file_path, test_file_path):
     Corp = NGram.corpora_preprocess(test_file_path)
     print calc_perplexity(Corp, K_bigram, Unigram_count, Bigram_Dict)
 
-perplexity("train/obama.txt", "development/obama.txt")
-perplexity("train/trump.txt", "development/trump.txt")
-perplexity("train/trump.txt", "development/obama.txt")
-perplexity("train/obama.txt", "development/trump.txt")
+#perplexity("train/obama.txt", "development/obama.txt")
+#perplexity("train/trump.txt", "development/trump.txt")
+#perplexity("train/trump.txt", "development/obama.txt")
+#perplexity("train/obama.txt", "development/trump.txt")
