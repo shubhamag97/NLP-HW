@@ -8,27 +8,26 @@ def corpora_preprocess(file_path):
     # Read data
     Fstream = open(file_path,'r')
     Speech = Fstream.read()
-    #Speech = "<START> the students liked the assignment <END>"
     Paragraphs = Speech.split('\n')
-    # Paragraphs = ["the students like the assignment", "I see the students eating cake"]
+    #Paragraphs = ["the students like the assignment", "I see the students eating cake"]
+    #Preprocess 1: Add <START> and <END> token for each paragraphs
     Word_Lists = [['<START>']+p.split()+['<END>'] for p in Paragraphs]
     for w_idx, paragraph in enumerate(Word_Lists):
         for idx in range(len(paragraph)):
             token = paragraph[idx]
+            #Preprocess 2: take out single apostrophes by merging with words before/after
             if token == '\xe2\x80\x99':
                 paragraph[idx] = paragraph[idx-1]+'\''+paragraph[idx+1]
                 paragraph[idx-1] = ""
                 paragraph[idx+1] = ""
+            #Preprocess 2: take out apostrophes with trailing characters by merging with the word before
             if token in ['\'ve', '\'s', 'n\'t', '\'re']:
                 paragraph[idx] = paragraph[idx-1]+paragraph[idx]
                 paragraph[idx-1] = ""
-            #Words_obama[idx] = [word for word in paragraph if len(word)>0]
             processed = [word for word in paragraph if len(word)>0]
             #processed = [word for word in processed if not word in Stop_words] 
             Word_Lists[w_idx] = processed
     return Word_Lists
-
-Words_obama = corpora_preprocess("train/trump.txt")
 
 # Count total # of tokens
 def get_token_cnt(words):

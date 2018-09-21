@@ -52,5 +52,3 @@ def smoothing(file_path, add_k = ADD_K):
 	# print K_unigram
 	# print K_bigram
 	return Unigram_count, Bigram_Dict, K_unigram, K_bigram
-
-smoothing("train/obama.txt")
