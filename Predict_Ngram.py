@@ -47,10 +47,11 @@ def Predict_Ngram(Inpath = "../test/test.txt", Outpath = "../Output/t1.csv", Tra
     Dictionary_Trump, Bigram_Dict_Trump, _, Bigram_Trump = smoothing.smoothing(Train_Trump)
 
     #Iterate through test cases, decide whose speech it is
-    for idx, paragraph in enumerate(Paragraphs):
+    for idx, paragraph in enumerate(Paragraphs[:-1]):
+        print idx, paragraph
         Trump_prob = Predict_Prob(paragraph, Dictionary_Trump, Bigram_Dict_Trump, Bigram_Trump)
         Obama_prob = Predict_Prob(paragraph, Dictionary_Obama, Bigram_Dict_Obama, Bigram_Obama)
-        f.write(str(idx)+',')
+        f.write(str(idx+1)+',')
         if Trump_prob >= Obama_prob:
             f.write('1')
         else:
