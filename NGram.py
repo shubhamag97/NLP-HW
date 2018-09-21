@@ -10,7 +10,7 @@ def corpora_preprocess(file_path):
     Speech = Fstream.read()
     #Speech = "<START> the students liked the assignment <END>"
     Paragraphs = Speech.split('\n')
-    #Paragraphs = ["the students like the assignment", "I see the students eating cake"]
+    # Paragraphs = ["the students like the assignment", "I see the students eating cake"]
     Word_Lists = [['<START>']+p.split()+['<END>'] for p in Paragraphs]
     for w_idx, paragraph in enumerate(Word_Lists):
         for idx in range(len(paragraph)):

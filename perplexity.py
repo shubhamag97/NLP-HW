@@ -40,7 +40,7 @@ def calc_perplexity(corp, n_gram, Unigram_count, Bigram_Dict, n = 2):
     return ans
 
 def get_bigram_prob(bigram, K_bigram, Bigram_Dict):
-    if bigram in Bigram_Dict:
+    if bigram[1] in Bigram_Dict[bigram[0]]:
         return K_bigram[bigram]
     else:
         return K_bigram[(bigram[0], "<OTHERS>")]

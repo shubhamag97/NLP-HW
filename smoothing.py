@@ -2,8 +2,8 @@ from collections import Counter, defaultdict
 from sets import Set
 import NGram
 
-Unknown_threshold = 10
-ADD_K = 0.02
+Unknown_threshold = 1
+ADD_K = 0.0000000000000001
 
 def get_unknown_words(Unigram_count):
 	return Set([word for word in Unigram_count if Unigram_count[word]<=Unknown_threshold])
@@ -39,13 +39,18 @@ def smoothing(file_path, add_k = ADD_K):
 	Unigram_count, Unigram = NGram.unsmoothed_unigram(Words)
 	Unknown_words = get_unknown_words(Unigram_count)
 	Words = convert_unk_threshold(Words, Unknown_words)
+	# print Unigram_count
 
 	Token_cnt = NGram.get_token_cnt(Words)
 	Unigram_count, Unigram = NGram.unsmoothed_unigram(Words)
 	Bigram_count, Bigram_Dict, Bigram = NGram.unsmoothed_bigram(Words, Unigram_count)
-	#print "# of Unigram: " + str(len(Unigram_count))
+	# print Unigram_count
+	# print Bigram_count
+	# print "# of Unigram: " + str(len(Unigram_count))
 	K_unigram = get_k_unigram(add_k, Unigram_count, Token_cnt)
 	K_bigram = get_k_bigram(add_k, Unigram_count, Bigram_count)
+	# print K_unigram
+	# print K_bigram
 	return Unigram_count, Bigram_Dict, K_unigram, K_bigram
 
 smoothing("train/obama.txt")
