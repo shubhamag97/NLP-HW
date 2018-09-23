@@ -26,7 +26,7 @@ def Predict_Prob(Paragraph, Uni_dict, Bi_dict, Bigram):
     # Instead of multiplying, we calculate summation of log values to prevent floating point issues
     return sum(Probs)
 
-def Predict_Ngram(Inpath = "../test/test.txt", Outpath = "../Output/t1.csv", Train_Trump = "../train/trump.txt", Train_Obama = "../train/obama.txt"):
+def Predict_Ngram(Inpath = "../test/test.txt", Outpath = "../Output/t1.csv", Train_Trump = "../full_train/trump.txt", Train_Obama = "../full_train/obama.txt"):
     '''
     Input:
         Inpath  : file path for test data
@@ -51,11 +51,12 @@ def Predict_Ngram(Inpath = "../test/test.txt", Outpath = "../Output/t1.csv", Tra
         print idx, paragraph
         Trump_prob = Predict_Prob(paragraph, Dictionary_Trump, Bigram_Dict_Trump, Bigram_Trump)
         Obama_prob = Predict_Prob(paragraph, Dictionary_Obama, Bigram_Dict_Obama, Bigram_Obama)
-        f.write(str(idx+1)+',')
+        f.write(str(idx)+',')
         if Trump_prob >= Obama_prob:
             f.write('1')
         else:
             f.write('0')
         f.write('\n')
+
 
 Predict_Ngram()

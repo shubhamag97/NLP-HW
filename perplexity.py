@@ -45,12 +45,39 @@ def get_bigram_prob(bigram, K_bigram, Bigram_Dict):
     else:
         return K_bigram[(bigram[0], "<OTHERS>")]
 
-def perplexity(train_file_path, test_file_path):
-    Unigram_count, Bigram_Dict, K_unigram, K_bigram = smoothing.smoothing(train_file_path)
+def perplexity(train_file_path, test_file_path, k, threshold):
+    Unigram_count, Bigram_Dict, K_unigram, K_bigram = smoothing.smoothing(train_file_path, k, threshold)
     Corp = convert_unk(NGram.corpora_preprocess(test_file_path), Unigram_count)
-    print train_file_path + " " + test_file_path + ": " + str(calc_perplexity(Corp, K_bigram, Unigram_count, Bigram_Dict))
+    perp = calc_perplexity(Corp, K_bigram, Unigram_count, Bigram_Dict)
+    print train_file_path + " " + test_file_path + ": " + str(perp)
+    return perp
 
-#perplexity("train/obama.txt", "development/obama.txt")
-#perplexity("train/obama.txt", "development/trump.txt")
-#perplexity("train/trump.txt", "development/trump.txt")
-#perplexity("train/trump.txt", "development/obama.txt")
+
+def Perplexity_Validation(Outpath = "../Output/perplexity.csv"):
+    k_range = [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1]
+    threshold_range = [x for x in range(1, 6)]
+
+    f = open(Outpath, 'w')
+    f.write('k,threshold,obama_obama,obama_trump,trump_trump,trump_obama\n')
+
+    for k in k_range:
+        for threshold in threshold_range:
+
+            print k
+            print threshold
+
+            f.write(str(k) + ',')
+            f.write(str(threshold) + ',')
+
+            perp_oo = perplexity("../train/obama.txt", "../development/obama.txt", k, threshold)
+            perp_ot = perplexity("../train/obama.txt", "../development/trump.txt", k, threshold)
+            perp_tt = perplexity("../train/trump.txt", "../development/trump.txt", k, threshold)
+            perp_to = perplexity("../train/trump.txt", "../development/obama.txt", k, threshold)           
+            
+            f.write(str(perp_oo) + ',')
+            f.write(str(perp_ot) + ',')
+            f.write(str(perp_tt) + ',')
+            f.write(str(perp_to) + '\n')
+
+
+# Perplexity_Validation()

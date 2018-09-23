@@ -3,10 +3,10 @@ from sets import Set
 import NGram
 
 Unknown_threshold = 1
-ADD_K = 0.0000000000000001
+ADD_K = 0.0001
 
-def get_unknown_words(Unigram_count):
-	return Set([word for word in Unigram_count if Unigram_count[word]<=Unknown_threshold])
+def get_unknown_words(Unigram_count, unknown_threshold = Unknown_threshold):
+	return Set([word for word in Unigram_count if Unigram_count[word]<=unknown_threshold])
 
 def convert_unk_threshold(Word_Lists, Unknown_words):
     for w_idx, paragraph in enumerate(Word_Lists):
@@ -34,10 +34,10 @@ def get_k_bigram(add_k, unigram_count, bigram_count):
 			k_bigram[bigram] = add_k / float(unigram_count[word] + len(unigram_count) * add_k)
 	return k_bigram
 
-def smoothing(file_path, add_k = ADD_K):
+def smoothing(file_path, add_k = ADD_K, unknown_threshold = Unknown_threshold):
 	Words = NGram.corpora_preprocess(file_path)
 	Unigram_count, Unigram = NGram.unsmoothed_unigram(Words)
-	Unknown_words = get_unknown_words(Unigram_count)
+	Unknown_words = get_unknown_words(Unigram_count, unknown_threshold)
 	Words = convert_unk_threshold(Words, Unknown_words)
 	# print Unigram_count
 
